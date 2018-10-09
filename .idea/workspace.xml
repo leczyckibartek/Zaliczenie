@@ -100,7 +100,7 @@
       <path value="$PROJECT_DIR$/vendor/sensiolabs/security-checker" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="446" />
     <option name="y" value="2" />
     <option name="width" value="800" />
