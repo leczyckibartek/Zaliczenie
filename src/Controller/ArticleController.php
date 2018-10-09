@@ -22,6 +22,6 @@ class ArticleController extends AbstractController
     public function homepage()
 
     {
-        return new Response('JAZDA');
+        return $this->render("base.html.twig");
     }
 }
