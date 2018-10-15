@@ -9,7 +9,9 @@
 namespace App\Controller;
 
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use App\Entity\Article;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,13 +19,20 @@ class ArticleController extends AbstractController
 {
 
     /**
-     * @Route("/")
+     * @Route("/news/{slug}")
      */
-    public function Hello()
-
+    public function show($slug, EntityManagerInterface $em)
     {
-        return $this->render("base.html.twig");
-    }
 
+        $repository = $em->getRepository(Article::class);
+
+        $article = $repository->findOneBy(['slug' => $slug]);
+        if (!$article) {
+            throw $this->createNotFoundException(sprintf('No article for slug "%s"', $slug));
+        }
+        return $this->render('admin_article/index.html.twig', [
+            'article' => $article,
+        ]);
+    }
 
 }

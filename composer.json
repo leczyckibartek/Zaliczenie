@@ -6,11 +6,13 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "knplabs/knp-markdown-bundle": "^1.7",
+        "knplabs/knp-time-bundle": "^1.8",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "*",
         "symfony/console": "*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "*",
+        "symfony/orm-pack": "^1.0",
         "symfony/twig-bundle": "*",
         "symfony/web-server-bundle": "*",
         "symfony/yaml": "*"
@@ -20,6 +22,7 @@
         "sensiolabs/security-checker": "^5.0",
         "symfony/debug-bundle": "^3.3|^4.0",
         "symfony/dotenv": "*",
+        "symfony/maker-bundle": "^1.8",
         "symfony/monolog-bundle": "^3.0",
         "symfony/profiler-pack": "^1.0",
         "symfony/var-dumper": "^3.3|^4.0"

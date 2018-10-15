@@ -9,6 +9,7 @@
                   integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
             <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
             <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+            <link href="{{ asset('fonts') }}" rel="stylesheet">
         {% endblock %}
 
     </head>
@@ -16,25 +17,23 @@
     <div class="container-fluid" id="wrapper">
         <div class="row">
             <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2">
-                <h1 class="site-title"><a href="index.html"><em class="fa fa-rocket"></em> Brand.name</a></h1>
+                <h1 class="site-title"><a href="index.html"><em class="fa fa-rocket"></em> LINKEDIN</a></h1>
 
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
                 <ul class="nav nav-pills flex-column sidebar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="index.html"><em class="fa fa-dashboard"></em> Dashboard <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="widgets.html"><em class="fa fa-calendar-o"></em> Widgets</a></li>
-                    <li class="nav-item"><a class="nav-link" href="charts.html"><em class="fa fa-bar-chart"></em> Charts</a></li>
-                    <li class="nav-item"><a class="nav-link" href="buttons.html"><em class="fa fa-hand-o-up"></em> Buttons</a></li>
-                    <li class="nav-item"><a class="nav-link" href="forms.html"><em class="fa fa-pencil-square-o"></em> Forms</a></li>
-                    <li class="nav-item"><a class="nav-link" href="cards.html"><em class="fa fa-clone"></em> Cards</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html"><em class="fa fa-dashboard"></em> Panel główny <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="charts.html"><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
+                    <li class="nav-item"><a class="nav-link" href="buttons.html"><em class="fa fa-hand-o-up"></em> Szukaj pracownika</a></li>
+                    <li class="nav-item"><a class="nav-link" href="forms.html"><em class="fa fa-pencil-square-o"></em> Dodaj ogłoszenie</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cards.html"><em class="fa fa-clone"></em> Wiadomości</a></li>
                 </ul>
-                <a href="login.html" class="logout-button"><em class="fa fa-power-off"></em> Signout</a>
+                <a href="login.html" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
             </nav>
         </div>
     </div>
 
 
 
-    <img class="nav-profile-img" src="{{ asset('images/1.jpg') }}">
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
