@@ -18,9 +18,7 @@ class HomeController extends AbstractController
         $repository = $em->getRepository(Offert::class);
 
         $article = $repository->findAll();
-        if (!$article) {
-            throw $this->createNotFoundException(sprintf('No article for slug "%s"', $slug));
-        }
+
 
         return $this->render('home/index.html.twig', [
         "offerts" => $article
