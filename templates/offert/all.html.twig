@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    {% for offert in offerts  %}
+    <div class="articles-container">
+        <div class="article border-bottom">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-2 date">
+                        <div class="large">{{  offert.addedAt|date("d-m")  }}</div>
+                        <div class="text-muted">{{  offert.addedAt|date("H:i") }}</div>
+                    </div>
+                    <div class="col-10">
+                        <h4><a href="{{ path('offert_show', {'id': offert.id}) }}">{{ offert.title }}</a></h4>
+                        <p>Przez: {{ offert.employerId }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div><!--End .article-->
+    </div>
+    {% endfor %}
+
+{% endblock %}

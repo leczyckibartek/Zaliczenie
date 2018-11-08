@@ -9,6 +9,7 @@
             <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
             <link href="{{ asset('css/style.css') }}" rel="stylesheet">
             <link href="{{ asset('fonts') }}" rel="stylesheet">
+
         {% endblock %}
 
     </head>
@@ -18,38 +19,59 @@
             <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2">
                 <h1 class="site-title"><a href="{{ path('home') }}"><em class="fa fa-rocket"></em> LINKEDIN</a></h1>
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
+                {% if(is_granted('ROLE_EMPLOYER'))%}
                 <ul class="nav nav-pills flex-column sidebar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="{{ path('home') }}"><em class="fa fa-dashboard"></em> Panel główny <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('home') }}"><em class="fa fa-dashboard"></em> Panel główny <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-hand-o-up"></em> Szukaj pracownika</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('offer_form') }}"><em class="fa fa-pencil-square-o"></em> Dodaj ogłoszenie</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('offert_add') }}"><em class="fa fa-pencil-square-o"></em> Dodaj ogłoszenie</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('offert_my') }}"><em class="fa fa-pencil-square-o"></em> Twoje ogłoszenia</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-clone"></em> Wiadomości</a></li>
                 </ul>
-                <a href="login.html" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
+                    <a href="{{ path('app_logout') }}" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
+                {% elseif(is_granted('ROLE_USER')) %}
+                    <ul class="nav nav-pills flex-column sidebar-nav">
+                        <li class="nav-item"><a class="nav-link" href="{{ path('home') }}"><em class="fa fa-dashboard"></em> Panel główny <span class="sr-only">(current)</span></a></li>
+                        <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
+                        <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-hand-o-up"></em> Szukaj ofert</a></li>
+                        <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-pencil-square-o"></em> Twoje CV</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('offert_show_all') }}"><em class="fa fa-pencil-square-o"></em> Oferty Pracy</a></li>
+                        <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-clone"></em> Wiadomości</a></li>
+                    </ul>
+                    <a href="{{ path('app_logout') }}" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
+                    {% else %}
+                        <ul class="nav nav-pills flex-column sidebar-nav">
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}"><em class="fa fa-dashboard"></em> Zaloguj <span class="sr-only">(current)</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('user_registration') }}"><em class="fa fa-bar-chart"></em> Zarejestruj</a></li>
+
+                        </ul>
+
+                {% endif %}
+
             </nav>
 
     <main class="col-xs-12 col-sm-8 col-lg-9 col-xl-10 pt-3 pl-4 ml-auto">
+        {% if(is_granted('IS_AUTHENTICATED_FULLY'))%}
         <header class="page-header row justify-center">
             <div class="col-md-6 col-lg-8" >
                 <h1 class="float-left text-center text-md-left">Panel główny</h1>
             </div>
-            <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right"><a class="btn btn-stripped dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right">
+                <a class="btn btn-stripped dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src={{ asset('images/profile-pic.jpg') }} alt="profile_photo" class="circle float-left profile-photo" width="50" height="auto">
                     <div class="username mt-1">
-                        <h4 class="mb-1">Username</h4>
-                        <h6 class="text-muted">Super Admin</h6>
+                        <h4 class="mb-1">{{ app.user.username }}</h4>
+                        <h6 class="text-muted">{{ app.user.email }}</h6>
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" style="margin-right: 1.5rem;" aria-labelledby="dropdownMenuLink"><a class="dropdown-item" href="#"><em class="fa fa-user-circle mr-1"></em> View Profile</a>
-                    <a class="dropdown-item" href="#"><em class="fa fa-sliders mr-1"></em> Preferences</a>
-                    <a class="dropdown-item" href="#"><em class="fa fa-power-off mr-1"></em> Logout</a></div>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}"><em class="fa fa-power-off mr-1"></em> Logout</a></div>
             </div>
             <div class="clear"></div>
         </header>
+            {% else %}
 
-
-
-
+        {% endif %}
         {% block body %}{% endblock %}
 
     </main>
@@ -60,6 +82,7 @@
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
         {% endblock %}
 
     </body>

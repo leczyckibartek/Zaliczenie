@@ -18,7 +18,8 @@
         "symfony/twig-bundle": "*",
         "symfony/validator": "*",
         "symfony/web-server-bundle": "*",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "white-october/pagerfanta-bundle": "^1.2"
     },
     "require-dev": {
         "easycorp/easy-log-handler": "^1.0.7",

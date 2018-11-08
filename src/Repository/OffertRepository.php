@@ -22,19 +22,17 @@ class OffertRepository extends ServiceEntityRepository
 //    /**
 //     * @return Offert[] Returns an array of Offert objects
 //     */
-    /*
-    public function findByExampleField($value)
+
+    public function findByExampleField()
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('o.addedAt', 'DESC')
+            ->setMaxResults(5)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Offert

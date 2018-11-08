@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    <div class="col-md-12 col-lg-4">
+    <div class="card mb-4">
+    <div class="card-block">
+    <h3 class="card-title">{{  offert.title }}</h3>
+    <h6 class="card-subtitle mb-2 text-muted"></h6>
+
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-2 date">
+                            <div class="large">{{  offert.addedAt|date("d-m")  }}</div>
+                            <div class="text-muted">{{  offert.addedAt|date("H:i") }}</div>
+                        </div>
+                        <div class="col-10">
+                            <h4></h4>
+                            <p>
+                                {{  offert.content }}
+                            </p>
+                            {% for skill in offert.skill %}
+                                {{ skill.name }}
+                                {{ skill.value }}
+                            {% endfor %}
+
+                            <p>Przez: {{ offert.employerId }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div><!--End .article-->
+
+    </div>
+    </div>
+
+    {% if(is_granted('ROLE_USER')) %}
+        <button type="button" class="btn btn-default"><a href="">ODPOWIEDZ</a></button>
+    {% endif %}
+{% endblock %}

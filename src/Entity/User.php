@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -23,7 +25,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=20, unique=true)
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
@@ -52,9 +53,27 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $CEIDG;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $employer;
+
+
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
+        $this->date = new \DateTime();
     }
 
     // other properties and methods
@@ -110,8 +129,48 @@ class User implements UserInterface
     {
         return $this->roles;
     }
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
 
     public function eraseCredentials()
     {
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getCEIDG(): ?string
+    {
+        return $this->CEIDG;
+    }
+
+    public function setCEIDG(?string $CEIDG): self
+    {
+        $this->CEIDG = $CEIDG;
+
+        return $this;
+    }
+
+    public function getEmployer(): ?bool
+    {
+        return $this->employer;
+    }
+
+    public function setEmployer(?bool $employer): self
+    {
+        $this->employer = $employer;
+
+        return $this;
     }
 }
