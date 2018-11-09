@@ -23,10 +23,11 @@ class OffertController extends AbstractController
     public function index(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,UserInterface $user = null)
     {
 
-        $form = $this->createForm(OffertType::class);
-        $username = $user->getUsername();
+
+        $userid = $user->getId();
         $offert = new Offert();
-        $offert->setEmployerId($username);
+        $offert->setEmployerId($userid);
+        $form = $this->createForm(OffertType::class,$offert);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $offert = $form->getData();
@@ -48,10 +49,10 @@ class OffertController extends AbstractController
      */
     public function showMy(EntityManagerInterface $em,UserInterface $user = null)
     {
-        $username = $user->getUsername();
+        $userid = $user->getId();
         $repository = $em->getRepository(Offert::class);
         $offert = $repository->findBy(
-            ['employer_id' => $username]
+            ['employer_id' => $userid]
         );
         return $this->render('offert/mine.html.twig', [
             "offert" => $offert,

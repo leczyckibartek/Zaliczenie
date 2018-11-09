@@ -1,0 +1,31 @@
+
+{% block ExpirienceType_widget %}
+    <div class="row">
+        <div class="col-md-10">
+
+            {{ form_row(form.nameOfJob) }}
+            {{ form_row(form.company) }}
+
+        </div>
+        <p class="text-center">
+            <a href="#" class="expierience-remove btn btn-default" title="Delete hobby"><i class="fa fa-times-circle"></i></a>
+            <a href="#" class="expierience-add btn btn-default" title="Add hobby"><i class="fa fa-plus-circle"></i></a>
+        </p>
+
+    </div>
+{% endblock %}
+
+{% block SchoolType_widget %}
+    <div class="row">
+        <div class="col-md-10">
+            {{ form_row(form.name) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.start) }}
+            {{ form_row(form.finish) }}
+        </div>
+        <p class="text-center">
+            <a href="#" class="school-remove btn btn-default" title="Delete hobby"><i class="fa fa-times-circle"></i></a>
+            <a href="#" class="school-add btn btn-default" title="Add hobby"><i class="fa fa-plus-circle"></i></a>
+        </p>
+    </div>
+{% endblock %}

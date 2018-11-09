@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ {% form_theme form
+ 'DZIECIAKI.html.twig'
+ 'jquery.collection.html.twig'  %}
+<div class="col-sm-12 col-md-6">
+    <div class="card mb-4">
+        <div class="card-block">
+            <h3 class="card-title">Contact Form</h3>
+            <h6 class="card-subtitle mb-2 text-muted">Subtitle</h6>
+
+            {{ form_start(form,{'attr': {'novalidate':'true'}}) }}
+            {{ form_errors(form) }}
+
+            <fieldset>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{  form_row(form.fname)}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.lname) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.dateOfBirth) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.sex) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.address) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.photo) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.phone) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.schools) }}
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <div class="col-12 no-padding">
+                        {{ form_row(form.expiriences) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 widget-right no-padding">
+                        <button type="submit" class="btn btn-primary btn-md float-right">Submit</button>
+                    </div>
+                </div>
+
+            </fieldset>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('web/js/jquery.collection.js') }}"></script>
+        <script>
+            $('.expiriences').collection({
+
+                allow_up: false,
+                allow_down: false,
+                init_with_n_elements: 1,
+                prefix: 'expierience',
+
+            });
+
+
+            $('.schools').collection({
+
+                allow_up: false,
+                allow_down: false,
+                init_with_n_elements: 1,
+                prefix: 'school',
+            });
+
+        </script>
+    {% endblock %}
+
+
+
+{% endblock %}

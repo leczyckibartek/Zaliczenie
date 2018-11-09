@@ -19,7 +19,7 @@ class Offert
     private $id;
 
     /**
-     * @ORM\Column(type="string",length=100)
+     * @ORM\Column(type="integer")
      */
     private $employer_id;
 

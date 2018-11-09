@@ -7,6 +7,7 @@
         "ext-iconv": "*",
         "knplabs/knp-markdown-bundle": "^1.7",
         "knplabs/knp-time-bundle": "^1.8",
+        "ninsuo/symfony-collection": "^2.1",
         "sensio/framework-extra-bundle": "^5.2",
         "symfony/asset": "*",
         "symfony/console": "*",
