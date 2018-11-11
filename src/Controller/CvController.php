@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CvController extends AbstractController
 {
     /**
-     * @Route("/cv/add", name="cv_add")
+     * @Route("/home/cv/add", name="cv_add")
      */
     public function index(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,UserInterface $user=null)
     {
@@ -49,7 +49,7 @@ class CvController extends AbstractController
             $em->persist($cv);
             $em->flush();
         }
-        return $this->render('RODZIC.html.twig', [
+        return $this->render('cv/add.html.twig', [
             'form' => $form->createView()
         ]);
     }

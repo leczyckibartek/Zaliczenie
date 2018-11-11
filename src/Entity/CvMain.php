@@ -68,10 +68,16 @@ class CvMain
      */
     private $userid;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SkillCv", mappedBy="cv", cascade={"persist"})
+     */
+    private $skillCvs;
+
     public function __construct()
     {
         $this->expiriences = new ArrayCollection();
         $this->schools = new ArrayCollection();
+        $this->skillCvs = new ArrayCollection();
 
     }
 
@@ -234,6 +240,37 @@ class CvMain
     public function setUserid(int $userid): self
     {
         $this->userid = $userid;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SkillCv[]
+     */
+    public function getSkillCvs(): Collection
+    {
+        return $this->skillCvs;
+    }
+
+    public function addSkillCv(SkillCv $skillCv): self
+    {
+        if (!$this->skillCvs->contains($skillCv)) {
+            $this->skillCvs[] = $skillCv;
+            $skillCv->setCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSkillCv(SkillCv $skillCv): self
+    {
+        if ($this->skillCvs->contains($skillCv)) {
+            $this->skillCvs->removeElement($skillCv);
+            // set the owning side to null (unless already changed)
+            if ($skillCv->getCv() === $this) {
+                $skillCv->setCv(null);
+            }
+        }
 
         return $this;
     }

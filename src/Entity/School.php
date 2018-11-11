@@ -17,17 +17,17 @@ class School
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100,nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50,nullable=true)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date",nullable=true)
      */
     private $start;
 
@@ -39,6 +39,7 @@ class School
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\CvMain", inversedBy="schools")
      */
+
     private $cv;
 
     public function getId(): ?int

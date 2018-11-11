@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/home", name="home")
      */
     public function index(EntityManagerInterface $em,UserInterface $user = null)
     {

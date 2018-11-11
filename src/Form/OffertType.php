@@ -44,6 +44,10 @@ class OffertType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false,
                 'allow_delete' => true,
+                'prototype' => true,
+                'attr' => array(
+                    'class' => 'skills',
+                ),
             ));
 
     }

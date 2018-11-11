@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Answer;
+use App\Entity\CvMain;
 use App\Entity\Offert;
 use App\Entity\Skill;
 use App\Form\OffertType;
@@ -18,7 +20,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class OffertController extends AbstractController
 {
     /**
-     * @Route("/offert/add", name="offert_add")
+     * @Route("/home/offert/add", name="offert_add")
      */
     public function index(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,UserInterface $user = null)
     {
@@ -45,7 +47,7 @@ class OffertController extends AbstractController
     }
 
     /**
-     * @Route("/offert/my", name="offert_my")
+     * @Route("/home/offert/my", name="offert_my")
      */
     public function showMy(EntityManagerInterface $em,UserInterface $user = null)
     {
@@ -62,7 +64,7 @@ class OffertController extends AbstractController
     }
 
     /**
-     * @Route("/offert/edit/{id}", name="offert_edit")
+     * @Route("/home/offert/edit/{id}", name="offert_edit")
      */
     public function edit(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,string $id,UserInterface $user = null)
     {
@@ -87,7 +89,7 @@ class OffertController extends AbstractController
     }
 
     /**
-     * @Route("/offert/show", name="offert_show_all")
+     * @Route("/home/offert/show", name="offert_show_all")
      */
     public function show(EntityManagerInterface $em)
     {
@@ -100,7 +102,7 @@ class OffertController extends AbstractController
     }
 
     /**
-     * @Route("/offert/show/{id}", name="offert_show")
+     * @Route("/home/offert/show/{id}", name="offert_show")
      */
     public function showOne(EntityManagerInterface $em,string $id)
     {
@@ -110,8 +112,55 @@ class OffertController extends AbstractController
 
         return $this->render('offert/index.html.twig', [
             "offert" => $offert,
-
-
         ]);
+    }
+    /**
+     * @Route("/home/offer/answer/{offertId}",name="answer")
+     */
+    public function Answer(EntityManagerInterface $em,UserInterface $user,string $offertId)
+    {
+        $id = $user->getId();
+        $cvId = $em->getRepository(CvMain::class)->findOneBy(
+            ['userid'=> $id]
+        )->getId();
+
+        if($currentAnswer = $em->getRepository(Answer::class)->findOneBy(
+            ['idOffert'=> $offertId]
+        ))
+        {
+            $currentIdOffert = $currentAnswer->getIdOffert();
+            $currentIdCv = $currentAnswer->getIdCv();
+            if($currentIdCv==$cvId && $currentIdOffert==$offertId)
+            {
+                $message = "Juz aplikowałes na to stanowisko";
+            }
+            else
+            {
+                $answer = new Answer();
+                $answer->setIdCv($cvId);
+                $answer->setIdOffert($offertId);
+                $em->persist($answer);
+                $em->flush();
+                $message = "koluniu działa";
+            }
+        }
+        else
+            {
+                $answer = new Answer();
+                $answer->setIdCv($cvId);
+                $answer->setIdOffert($offertId);
+                $em->persist($answer);
+                $em->flush();
+                $message = "koluniu działa";
+
+        }
+
+
+
+
+         return $this->redirectToRoute('offert_show',[
+             'id'=>$offertId,
+             'message'=>$message,
+         ]);
     }
 }

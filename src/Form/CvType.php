@@ -19,6 +19,7 @@ namespace App\Form;
 use App\Entity\CvMain;
 
 
+use App\Entity\SkillCv;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -57,6 +58,17 @@ class CvType extends AbstractType
                     'class' => 'expiriences',
                 ),
             ))
+            ->add('skillCvs', CollectionType::class, array(
+                'entry_type' => SkillCvType::class,
+                'entry_options' => array('label' => 'Umiejętności'),
+                'label' => false,
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
+                'prototype' => true,
+                'attr' => array(
+                    'class' => 'skillCvs',
+                )))
             ->add('schools', CollectionType::class, array(
                 'entry_type' => SchoolType::class,
                 'entry_options' => array('label' => 'Edukacja'),

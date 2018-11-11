@@ -1,0 +1,15 @@
+{% block SkillType_widget %}
+    <div class="row">
+        <div class="col-md-10">
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.value) }}
+
+        </div>
+        <p class="text-center">
+            <a href="#" class="skill-remove btn btn-default" title="Delete hobby"><i class="fa fa-times-circle"></i></a>
+            <a href="#" class="skill-add btn btn-default" title="Add hobby"><i class="fa fa-plus-circle"></i></a>
+        </p>
+
+    </div>
+{% endblock %}

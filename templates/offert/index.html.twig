@@ -9,6 +9,12 @@
     <div class="card-block">
     <h3 class="card-title">{{  offert.title }}</h3>
     <h6 class="card-subtitle mb-2 text-muted"></h6>
+        {% if message is defined %}
+            {{ message }}
+         {% else   %}
+
+        {% endif %}
+
                 <div class="col-xs-12">
                     <div class="row">
                         <div class="col-2 date">
@@ -36,6 +42,6 @@
     </div>
 
     {% if(is_granted('ROLE_USER')) %}
-        <button type="button" class="btn btn-default"><a href="">ODPOWIEDZ</a></button>
+        <a href={{ path('answer', {offertId : offert.id}) }}><button type="button" class="btn btn-default">ODPOWIEDZ</button></a>
     {% endif %}
 {% endblock %}
