@@ -33,6 +33,17 @@ class OffertRepository extends ServiceEntityRepository
         ;
     }
 
+//    public function findId($value)
+//    {
+//        return $this->createQueryBuilder('o')
+//            ->andWhere('a.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->orderBy('a.id', 'ASC')
+//            ->setMaxResults(10)
+//            ->getQuery()
+//            ->getResult()
+//            ;
+//    }
 
     /*
     public function findOneBySomeField($value): ?Offert

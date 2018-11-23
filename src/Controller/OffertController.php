@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\Answer;
 use App\Entity\CvMain;
 use App\Entity\Offert;
-use App\Entity\Skill;
 use App\Form\OffertType;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +23,6 @@ class OffertController extends AbstractController
      */
     public function index(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,UserInterface $user = null)
     {
-
 
         $userid = $user->getId();
         $offert = new Offert();
@@ -132,7 +130,10 @@ class OffertController extends AbstractController
             $currentIdCv = $currentAnswer->getIdCv();
             if($currentIdCv==$cvId && $currentIdOffert==$offertId)
             {
-                $message = "Juz aplikowałes na to stanowisko";
+                $this->addFlash(
+                    'alert',
+                    "JUŻ APLIKOWAŁEŚ NA TO STANOWISKO"
+                );
             }
             else
             {
@@ -141,7 +142,10 @@ class OffertController extends AbstractController
                 $answer->setIdOffert($offertId);
                 $em->persist($answer);
                 $em->flush();
-                $message = "koluniu działa";
+                $this->addFlash(
+                    'message',
+                    "WYSŁANO CV"
+                );
             }
         }
         else
@@ -151,7 +155,10 @@ class OffertController extends AbstractController
                 $answer->setIdOffert($offertId);
                 $em->persist($answer);
                 $em->flush();
-                $message = "koluniu działa";
+                $this->addFlash(
+                    'message',
+                    "WYSLANO CV"
+                );
 
         }
 
@@ -160,7 +167,6 @@ class OffertController extends AbstractController
 
          return $this->redirectToRoute('offert_show',[
              'id'=>$offertId,
-             'message'=>$message,
          ]);
     }
 }

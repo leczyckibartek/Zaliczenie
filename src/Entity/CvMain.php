@@ -44,7 +44,7 @@ class CvMain
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string")
      */
     private $photo;
 

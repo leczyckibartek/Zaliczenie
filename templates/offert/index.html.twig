@@ -3,17 +3,22 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-
+    {% for message in app.flashes('message') %}
+    <div class="alert bg-success" role="alert"><em class="fa fa-minus-circle mr-2"></em>
+        {{ message }}
+    </div>
+{% endfor %}
+    {% for alert in app.flashes('alert') %}
+        <div class="alert bg-danger" role="alert"><em class="fa fa-minus-circle mr-2"></em>
+            {{ alert }}
+        </div>
+    {% endfor %}
     <div class="col-md-12 col-lg-4">
     <div class="card mb-4">
     <div class="card-block">
     <h3 class="card-title">{{  offert.title }}</h3>
     <h6 class="card-subtitle mb-2 text-muted"></h6>
-        {% if message is defined %}
-            {{ message }}
-         {% else   %}
 
-        {% endif %}
 
                 <div class="col-xs-12">
                     <div class="row">

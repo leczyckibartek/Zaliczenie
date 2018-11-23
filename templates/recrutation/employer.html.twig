@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% for offer in offert  %}
+
+        <div class="articles-container" xmlns="http://www.w3.org/1999/html">
+            <div class="article border-bottom">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-2 date">
+                            <div class="large">{{  offer.addedAt|date("d-m")  }}</div>
+                            <div class="text-muted">{{  offer.addedAt|date("H:i") }}</div>
+                        </div>
+                        <div class="col-10">
+                            <h4><a href="{{ path('offert_show', {'id': offer.id}) }}">{{ offer.title }}</a></h4>
+                            <p>Przez: {{ offer.employerId }}</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ path('offert_edit', {'id': offer.id}) }}">   <button type="button" class="btn-default btn">Edytuj</button></a>
+                <a href="{{ path('recrutation_answer', {'id': offer.id}) }}">   <button type="button" class="btn-default btn">Zgłoszone Cv</button></a>
+                <div class="clear"></div>
+            </div><!--End .article-->
+        </div>
+
+    {% endfor %}
+{% endblock %}

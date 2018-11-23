@@ -29,6 +29,7 @@ class CvController extends AbstractController
         if($em->getRepository(CvMain::class)->findOneBy( ['userid' => $userid]))
         {
             $cv = $em->getRepository(CvMain::class)->findOneBy( ['userid' => $userid]);
+            $cv->setPhoto("");
             $form = $this->createForm(CvType::class,$cv);
         }
         else
@@ -41,6 +42,17 @@ class CvController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $cv = $form->getData();
+            $file = $form->get('photo')->getData();
+            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+            try {
+                $file->move(
+                    $this->getParameter('photos_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            $cv->setPhoto($fileName);
             $errors = $validator->validate($cv);
             if (count($errors) > 0) {
                 $errorsString = (string) $errors;
@@ -49,8 +61,34 @@ class CvController extends AbstractController
             $em->persist($cv);
             $em->flush();
         }
+
         return $this->render('cv/add.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+    private function generateUniqueFileName()
+    {
+        return md5(uniqid());
+    }
+
+
+
+//TODO szkoly i doswiadczenie pobrane oddzielnie w kontrolerze
+    /**
+     * @Route("/home/cv/show/{id}", name="cv_show")
+     */
+    public function show(string $id,EntityManagerInterface $em)
+    {
+        $cv = $em->getRepository(CvMain::class)->findOneBy(['id'=>$id]);
+        $schools =  $em->getRepository(School::class)->findOneBy(['cv'=>$id]);
+        $expiriences =  $em->getRepository(Expirience::class)->findOneBy(['cv'=>$id]);
+
+
+        return $this->render('cv/show.html.twig',
+            [
+                'cv' => $cv,
+                'schools'=>$schools,
+                'expiriences'=>$expiriences
+            ]);
     }
 }

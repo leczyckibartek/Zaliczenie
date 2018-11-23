@@ -22,11 +22,17 @@
                 {% if(is_granted('ROLE_EMPLOYER'))%}
                 <ul class="nav nav-pills flex-column sidebar-nav">
                     <li class="nav-item"><a class="nav-link" href="{{ path('home') }}"><em class="fa fa-dashboard"></em> Panel główny <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('recrutation') }}"><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-hand-o-up"></em> Szukaj pracownika</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('offert_add') }}"><em class="fa fa-pencil-square-o"></em> Dodaj ogłoszenie</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('offert_my') }}"><em class="fa fa-pencil-square-o"></em> Twoje ogłoszenia</a></li>
-                    <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-clone"></em> Wiadomości</a></li>
+                    <li class="parent nav-item"><a class="nav-link" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><em class="fa fa-clone"></em> Wiadomości<span class="icon pull-right" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><i class="fa fa-plus"></i></span> </a>
+                        <ul id="sub-item-1" class="children collapse">
+                            <li class="nav-item"><a class="nav-link" href="{{ path('message_show_received') }}">SKRZYNKA ODBIORCZA</a> </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('message_show_sent') }}">WYSŁANE</a> </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('message_add') }}">NAPISZ</a> </li>
+                        </ul>
+
+                    </li>
                 </ul>
                     <a href="{{ path('app_logout') }}" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
                 {% elseif(is_granted('ROLE_USER')) %}
@@ -36,7 +42,14 @@
                         <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-hand-o-up"></em> Szukaj ofert</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ path('cv_add') }}"><em class="fa fa-pencil-square-o"></em> Twoje CV</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ path('offert_show_all') }}"><em class="fa fa-pencil-square-o"></em> Oferty Pracy</a></li>
-                        <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-clone"></em> Wiadomości</a></li>
+                        <li class="parent nav-item"><a class="nav-link" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><em class="fa fa-clone"></em> Wiadomości<span class="icon pull-right" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><i class="fa fa-plus"></i></span> </a>
+                        <ul id="sub-item-1" class="children collapse">
+                            <li class="nav-item"><a class="nav-link" href="{{ path('message_show_received') }}">SKRZYNKA ODBIORCZA</a> </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('message_show_sent') }}">WYSŁANE</a> </li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('message_add') }}">NAPISZ</a> </li>
+                        </ul>
+
+                        </li>
                     </ul>
                     <a href="{{ path('app_logout') }}" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
                     {% else %}
@@ -58,12 +71,12 @@
             </div>
             <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right">
                 <a class="btn btn-stripped dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src={{ asset('images/profile-pic.jpg') }} alt="profile_photo" class="circle float-left profile-photo" width="50" height="auto">
+                    <img src={{ asset('images/avatar/'~app.user.avatar|default('default.jpg')) }} alt="profile_photo" class="circle float-left profile-photo" width="50" height="auto">
                     <div class="username mt-1">
                         <h4 class="mb-1">{{ app.user.username }}</h4>
                         <h6 class="text-muted">{{ app.user.email }}</h6>
                     </div>
-                </a>
+
                 <div class="dropdown-menu dropdown-menu-right" style="margin-right: 1.5rem;" aria-labelledby="dropdownMenuLink"><a class="dropdown-item" href="#"><em class="fa fa-user-circle mr-1"></em> View Profile</a>
                     <a class="dropdown-item" href="{{ path('app_logout') }}"><em class="fa fa-power-off mr-1"></em> Logout</a></div>
             </div>

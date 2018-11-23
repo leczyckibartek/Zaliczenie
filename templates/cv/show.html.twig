@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  {{ cv.lname }}
+    {{ cv.fname }}
+    {{ cv.dateOfBirth|date("d-m-Y") }}
+    {{ cv.sex }}
+    {% if (schools is defined) and (schools!=null) %}
+        {{ schools.name }}
+    {% endif %}
+    {% if (expiriences is defined) and (expiriences!=null) %}
+        {{ expiriences.nameOfJob }}
+    {% endif %}
+
+{% endblock %}

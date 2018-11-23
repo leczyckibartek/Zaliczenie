@@ -64,9 +64,9 @@ class User implements UserInterface
     private $CEIDG;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="string",length=50, nullable=true)
      */
-    private $employer;
+    private $avatar;
 
 
 
@@ -168,14 +168,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getEmployer(): ?bool
+    public function getAvatar(): ?string
     {
-        return $this->employer;
+        return $this->avatar;
     }
 
-    public function setEmployer(?bool $employer): self
+    public function setAvatar(?string $avatar): self
     {
-        $this->employer = $employer;
+        $this->avatar = $avatar;
 
         return $this;
     }

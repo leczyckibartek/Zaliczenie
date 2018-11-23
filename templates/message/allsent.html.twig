@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+{% block body %}
+{% for message in messages  %}
+    {{ message.sender }}
+{% endfor %}
+{% endblock %}

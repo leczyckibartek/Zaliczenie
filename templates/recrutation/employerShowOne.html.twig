@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    {% for cv in cvs  %}
+     <p>  <a href="">{{ cv.fname }} {{ cv.lname }}</a>
+        <a href="{{ path('recrutation_answer', {'id': cv.id}) }}">   <button type="button" class="btn-default btn">Wyślij zadanie</button></a>
+        <a href="{{ path('recrutation_answer', {'id': cv.id}) }}">   <button type="button" class="btn-default btn">Odpowiedz</button></a>
+     </p>
+    {% endfor %}
+{% endblock %}
