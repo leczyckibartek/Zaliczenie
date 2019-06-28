@@ -1,12 +1,90 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Zgłoszone cv{% endblock %}
 
+{#{% block body %}#}
+
+    {#<ul class="timeline">#}
+        {#{% for cv in cvs  %}#}
+            {#<li onclick='location.href="{{ path('cv_show', {'id': cv.id}) }}";' style="cursor: pointer;">#}
+                {#<div class="timeline-badge"><em class="fa fa-envelope-o"></em></div>#}
+                {#<div class="timeline-panel">#}
+                    {#<div class="timeline-heading">#}
+                        {#<h5 class="timeline-title mt-2">{{ cv.fname }} {{ cv.lname }}</h5>#}
+                    {#</div>#}
+                    {#<div class="timeline-body justify-center">#}
+                        {#<a href="{{ path('task_send', {'id': cv.id}) }}" class="btn-default btn">#}
+                            {#Zadania#}
+                        {#</a>#}
+                        {#{% for email in emails  %}#}
+                            {#{% if(cv.userId==email.id) %}#}
+                                {#<a href="{{ path('message_to_one', {'receiver': email.email}) }}" class="btn-default btn"> Odpowiedz</a>#}
+                            {#{% endif %}#}
+                        {#{% endfor %}#}
+                    {#</div>#}
+                {#</div>#}
+            {#</li>#}
+        {#{% endfor %}#}
+    {#</ul>#}
+{#{% endblock %}#}
 {% block body %}
-    {% for cv in cvs  %}
-     <p>  <a href="">{{ cv.fname }} {{ cv.lname }}</a>
-        <a href="{{ path('recrutation_answer', {'id': cv.id}) }}">   <button type="button" class="btn-default btn">Wyślij zadanie</button></a>
-        <a href="{{ path('recrutation_answer', {'id': cv.id}) }}">   <button type="button" class="btn-default btn">Odpowiedz</button></a>
-     </p>
-    {% endfor %}
+    <div class="card mb-4">
+        <div class="card-block">
+            <h3 class="card-title"></h3>
+            {% if cvs is defined %}
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table_id">
+                        <thead>
+                        <tr class="text-center">
+                            <th>Osoba</th>
+                            <th>Napisz</th>
+                            <th>Zadania</th>
+                            <th>Usuń</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for cv in cvs  %}
+                            <tr class="text-center">
+                                <td><a href="{{ path('cv_show', {'id': cv.id}) }}">{{ cv.fname |title}} {{ cv.lname|title }}</a></td>
+                                {% for email in emails  %}
+                                {% if(cv.userId==email.id) %}
+                                <td ><a href="{{ path('message_to_one', {'receiver': email.email}) }}">   <em class="fa fa-2x fa-envelope "></em></a></td>
+                                {% endif %}
+                                {% endfor %}
+                                <td ><a href="{{ path('task_send', {'id': cv.id}) }}">  <em class="fa fa-2x fa-tasks"></em></a></td>
+                                <td><a href=""> <em class="fa fa-2x  fa-trash"></em></a></td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                Brak zgłoszeń
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>
+
+        $(document).ready(function() {
+            $.noConflict();
+            $('#table_id').dataTable( {
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Polish.json"
+                },
+                'ordering':false,
+                'info':false
+            } );
+        } );
+
+
+    </script>
 {% endblock %}

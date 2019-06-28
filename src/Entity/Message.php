@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
@@ -22,19 +24,44 @@ class Message
     private $sender;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *      @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $receiver;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *       @Assert\Length(
+     *      max = 255,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $content;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *       @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      * @ORM\Column(type="string", length=50)
      */
     private $subject;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+    public function __construct()
+    {
+
+        $this->date = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -85,6 +112,18 @@ class Message
     public function setSubject(string $subject): self
     {
         $this->subject = $subject;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

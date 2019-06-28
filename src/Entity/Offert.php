@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OffertRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Offert
 {
@@ -19,18 +20,26 @@ class Offert
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string",length=50)
      */
     private $employer_id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="BŁĄD")
-     * @Assert\Length(min=3)
+     * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *    @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      */
     private $title;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *        @Assert\Length(
+     *      max = 10000,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      * @ORM\Column(type="text")
      */
     private $content;
@@ -39,13 +48,19 @@ class Offert
      * @ORM\Column(type="datetime")
      */
     private $addedAt;
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $editedAt;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $salaryMin;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $salaryMax;
@@ -53,21 +68,27 @@ class Offert
 
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
      * @ORM\Column(type="string", length=100)
      */
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="offert", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Skill", mappedBy="offert",orphanRemoval=true ,cascade={"persist"})
      */
     private $skill;
+
     public function __construct()
     {
-
-        $this->addedAt = new \DateTime();
         $this->skill = new ArrayCollection();
+        $this->addedAt = new \DateTime();
     }
 
+   
+    public function prePersist()
+    {
+        $this->editedAt = new \DateTime();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +143,17 @@ class Offert
     public function setAddedAt(\DateTimeInterface $addedAt): self
     {
         $this->addedAt = $addedAt;
+
+        return $this;
+    }
+    public function getEditedAt(): ?\DateTimeInterface
+    {
+        return $this->editedAt;
+    }
+
+    public function setEditedAt(\DateTimeInterface $editedAt): self
+    {
+        $this->addedAt = $editedAt;
 
         return $this;
     }

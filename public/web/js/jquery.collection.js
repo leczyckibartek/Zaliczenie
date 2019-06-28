@@ -40,7 +40,7 @@
                 return true;
             },
             allow_add: true,
-            add: '<a href="#">[ + ]</a>',
+            add: '<a href="#"> DODAJ</a>',
             before_add: function (collection, element) {
                 return true;
             },
@@ -48,7 +48,7 @@
                 return true;
             },
             allow_remove: true,
-            remove: '<a href="#">[ - ]</a>',
+            remove: '<a href="#">USUŃ</a>',
             before_remove: function (collection, element) {
                 return true;
             },

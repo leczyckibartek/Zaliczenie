@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Zmień avatar{% endblock %}
+{% block body %}
+   {{ form_start(form) }}
+    {{ form_row(form.avatar) }}
+    <input type="submit" value="Zmień">
+    {{ form_end(form) }}
+{% endblock %}

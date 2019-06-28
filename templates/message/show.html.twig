@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Wiadomość{% endblock %}
+{% block body %}
+
+
+    <div class="card-block">
+        <h3 class="card-title">{{ message.subject }}</h3>
+        <div class="row">
+            <div class="col-8">
+                <h6 class="card-subtitle mb-2">{{ message.sender }}</h6>
+            </div>
+            <div class="col-4">
+                <h6 class="card-subtitle mb-2 float-right"> {{ message.date|date('d-m-Y') }}</h6>
+            </div>
+        </div>
+        <fieldset>
+            <div class="card mb-4">
+                <div class="card-block btn-margins">
+                    <p>  {{ message.content |raw}} </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-12 widget-right no-padding">
+                 <a href="{{ path('message_to_one',{'receiver':message.sender}) }}" class="btn btn-secondary btn-md float-left"><span class="fa fa-reply"></span> &nbsp;Odpowiedz</a>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+{% endblock %}

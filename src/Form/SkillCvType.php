@@ -21,7 +21,7 @@ class SkillCvType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',TextType::class,array('label'=>'Umiejętność'));
+        $builder->add('name',TextType::class,array('label'=>'Umiejętność','empty_data'=>''));
 
     }
 

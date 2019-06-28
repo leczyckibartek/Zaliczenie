@@ -24,26 +24,39 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
-     * @Assert\Email()
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *      @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
+     * @ORM\Column(type="string", length=30, unique=true)
+     * @Assert\Email(
+     *     message = "Ten email '{{ value }}' nie jest poprwany ",
+     *     checkMX = true
+     * )
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *       @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      */
     private $username;
 
-    /**
-     * @Assert\NotBlank()
-     */
+
     private $plainPassword;
 
     /**
      * The below length depends on the "algorithm" you use for encoding
      * the password, but this works well with bcrypt.
-     *
+     *     @Assert\Length(
+     *      max = 64,
+     *      maxMessage = "Hasło może mieć maksymalnie {{ limit }} znaków"
+     * )
      * @ORM\Column(type="string", length=64)
      */
     private $password;

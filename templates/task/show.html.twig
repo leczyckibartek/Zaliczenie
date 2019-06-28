@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Otrzymane zadania{% endblock %}
+{% block body %}
+    <div class="card mb-4">
+        <div class="card-block card-hover">
+            <h3 class="card-title"></h3>
+
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+
+            <div class="articles-container">
+                {% for task in tasks  %}
+                    <div class="article">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-2 date">
+                                    {% for use in avatar  %}
+                                        <div class="large"><img  class="circle" height="auto" width="50px" src="{{ asset('images/avatar/'~use.avatar|default('default.jpg')) }}"></div>
+                                    {% endfor %}
+                                    <div class="text-muted">{{ task.userId }}</div>
+                                </div>
+                                <div class="col-10">
+                                    {% for name in names  %}
+                                    <h4><a href="{{ path('task_show_one',{'id':task.taskId}) }}">{{ name.title|title }}</a>
+                                        <a class="float-right btn btn-primary"  href="{{ path('task_answer',{'id':task.id}) }}">Odpowiedz</a>
+                                    </h4>
+                                    {% endfor %}
+                                    <p>edytowano: {{ task.date|date("H:i d-m-Y")}}</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div><!--End .article-->
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

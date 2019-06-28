@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Odpowiedz na zadanie{% endblock %}
+{% block body %}
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<input type="submit" value="Wyślij plik">
+{{ form_end(form) }}
+
+{% endblock %}

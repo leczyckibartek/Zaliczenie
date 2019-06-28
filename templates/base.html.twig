@@ -2,28 +2,26 @@
 <html xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Linkedin{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
                   integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
             <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
             <link href="{{ asset('css/style.css') }}" rel="stylesheet">
             <link href="{{ asset('fonts') }}" rel="stylesheet">
-
         {% endblock %}
-
     </head>
     <body>
     <div class="container-fluid" id="wrapper">
         <div class="row">
+                {% if(is_granted('ROLE_EMPLOYER'))%}
             <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2">
                 <h1 class="site-title"><a href="{{ path('home') }}"><em class="fa fa-rocket"></em> LINKEDIN</a></h1>
                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
-                {% if(is_granted('ROLE_EMPLOYER'))%}
                 <ul class="nav nav-pills flex-column sidebar-nav">
                     <li class="nav-item"><a class="nav-link" href="{{ path('home') }}"><em class="fa fa-dashboard"></em> Panel główny <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('recrutation') }}"><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
-                    <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-hand-o-up"></em> Szukaj pracownika</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('task_add') }}"><em class="fa fa-hand-o-up"></em> Dodaj zadanie</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('offert_add') }}"><em class="fa fa-pencil-square-o"></em> Dodaj ogłoszenie</a></li>
                     <li class="parent nav-item"><a class="nav-link" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><em class="fa fa-clone"></em> Wiadomości<span class="icon pull-right" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><i class="fa fa-plus"></i></span> </a>
                         <ul id="sub-item-1" class="children collapse">
@@ -31,15 +29,16 @@
                             <li class="nav-item"><a class="nav-link" href="{{ path('message_show_sent') }}">WYSŁANE</a> </li>
                             <li class="nav-item"><a class="nav-link" href="{{ path('message_add') }}">NAPISZ</a> </li>
                         </ul>
-
                     </li>
                 </ul>
                     <a href="{{ path('app_logout') }}" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
                 {% elseif(is_granted('ROLE_USER')) %}
+                <nav class="sidebar col-xs-12 col-sm-4 col-lg-3 col-xl-2">
+                    <h1 class="site-title"><a href="{{ path('home') }}"><em class="fa fa-rocket"></em> LINKEDIN</a></h1>
+                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><em class="fa fa-bars"></em></a>
                     <ul class="nav nav-pills flex-column sidebar-nav">
                         <li class="nav-item"><a class="nav-link" href="{{ path('home') }}"><em class="fa fa-dashboard"></em> Panel główny <span class="sr-only">(current)</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
-                        <li class="nav-item"><a class="nav-link" href=""><em class="fa fa-hand-o-up"></em> Szukaj ofert</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ path('task_show') }}"><em class="fa fa-bar-chart"></em> Rekrutacja</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ path('cv_add') }}"><em class="fa fa-pencil-square-o"></em> Twoje CV</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ path('offert_show_all') }}"><em class="fa fa-pencil-square-o"></em> Oferty Pracy</a></li>
                         <li class="parent nav-item"><a class="nav-link" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><em class="fa fa-clone"></em> Wiadomości<span class="icon pull-right" data-toggle="collapse" href="#sub-item-1" aria-expanded="true"><i class="fa fa-plus"></i></span> </a>
@@ -48,37 +47,32 @@
                             <li class="nav-item"><a class="nav-link" href="{{ path('message_show_sent') }}">WYSŁANE</a> </li>
                             <li class="nav-item"><a class="nav-link" href="{{ path('message_add') }}">NAPISZ</a> </li>
                         </ul>
-
                         </li>
+                        <a href="{{ path('app_logout') }}" class="logout-button d-none d-lg-block"><em class="fa fa-power-off"></em> Wyloguj</a>
                     </ul>
-                    <a href="{{ path('app_logout') }}" class="logout-button"><em class="fa fa-power-off"></em> Wyloguj</a>
                     {% else %}
-                        <ul class="nav nav-pills flex-column sidebar-nav">
-                            <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}"><em class="fa fa-dashboard"></em> Zaloguj <span class="sr-only">(current)</span></a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ path('user_registration') }}"><em class="fa fa-bar-chart"></em> Zarejestruj</a></li>
-
-                        </ul>
-
                 {% endif %}
 
-            </nav>
 
+            </nav>
     <main class="col-xs-12 col-sm-8 col-lg-9 col-xl-10 pt-3 pl-4 ml-auto">
         {% if(is_granted('IS_AUTHENTICATED_FULLY'))%}
         <header class="page-header row justify-center">
             <div class="col-md-6 col-lg-8" >
-                <h1 class="float-left text-center text-md-left">Panel główny</h1>
+                <h1 class="float-left text-center text-md-left">{% block navtitle %}Panel główny{% endblock %}</h1>
             </div>
             <div class="dropdown user-dropdown col-md-6 col-lg-4 text-center text-md-right">
                 <a class="btn btn-stripped dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src={{ asset('images/avatar/'~app.user.avatar|default('default.jpg')) }} alt="profile_photo" class="circle float-left profile-photo" width="50" height="auto">
+                    <img src="{{ asset('images/avatar/'~app.user.avatar|default('default.jpg')) }}" alt="profile_photo" class="circle float-left profile-photo" width="50" height="auto">
                     <div class="username mt-1">
                         <h4 class="mb-1">{{ app.user.username }}</h4>
                         <h6 class="text-muted">{{ app.user.email }}</h6>
                     </div>
+                </a>
+                    <div class="dropdown-menu dropdown-menu-right" style="margin-right: 1.5rem;" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href={{ path('avatar') }}><em class="fa fa-user-circle mr-1"></em> Zmień avatar</a>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}"><em class="fa fa-power-off mr-1"></em>Wyloguj</a></div>
 
-                <div class="dropdown-menu dropdown-menu-right" style="margin-right: 1.5rem;" aria-labelledby="dropdownMenuLink"><a class="dropdown-item" href="#"><em class="fa fa-user-circle mr-1"></em> View Profile</a>
-                    <a class="dropdown-item" href="{{ path('app_logout') }}"><em class="fa fa-power-off mr-1"></em> Logout</a></div>
             </div>
             <div class="clear"></div>
         </header>
@@ -88,6 +82,7 @@
         {% block body %}{% endblock %}
 
     </main>
+            </nav>
         </div>
     </div>
 
@@ -95,7 +90,26 @@
             <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script>
+            $(function(){
+                var path = window.location.href;
+                $('.nav-item .nav-link').each(function() {
+                    if (this.href === path) {
+                        $(this).addClass('active');
+                    }
+            });
+            });
+            $('#menu-toggle').on('click', function() {
+                $('#wrapper').toggleClass('toggled');
+            });
+        </script>
+        <script>
 
+
+            $('.alert').delay(2000).fadeOut('slow');
+
+
+        </script>
   {% endblock %}
 
     </body>

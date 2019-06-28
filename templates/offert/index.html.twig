@@ -1,52 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}{{ offert.title }}{% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('message') %}
-    <div class="alert bg-success" role="alert"><em class="fa fa-minus-circle mr-2"></em>
-        {{ message }}
-    </div>
-{% endfor %}
-    {% for alert in app.flashes('alert') %}
-        <div class="alert bg-danger" role="alert"><em class="fa fa-minus-circle mr-2"></em>
-            {{ alert }}
-        </div>
-    {% endfor %}
-    <div class="col-md-12 col-lg-4">
-    <div class="card mb-4">
+
     <div class="card-block">
-    <h3 class="card-title">{{  offert.title }}</h3>
-    <h6 class="card-subtitle mb-2 text-muted"></h6>
+        <h3 class="card-title purple">{{ offert.title |upper}}</h3>
+        {% for message in app.flashes('message') %}
+            <div class="alert bg-success" role="alert"><em class="fa fa-minus-circle mr-2"></em>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for alert in app.flashes('alert') %}
+            <div class="alert bg-danger" role="alert"><em class="fa fa-minus-circle mr-2"></em>
+                {{ alert }}
+            </div>
+        {% endfor %}
+        <h5 class="card-title">Stanowisko: {{ offert.description }}</h5>
+        {% if(is_granted('ROLE_USER')) %}
+            <a href={{ path('answer', {offertId : offert.id}) }}><button type="button" class="btn btn-default">ODPOWIEDZ</button></a>
+        {% endif %}
+        <h3 class="card-title purple">Opis stanowiska</h3>
+        <div class="card mb-4">
+            <div class="card-block btn-margins">
+                <p>{{ offert.content|raw }}</p>
+            </div>
+        </div>
+        <h3 class="card-title purple">Płaca</h3>
+        <div class="card mb-4">
+            <div class="card-block btn-margins">
+                <p>{{ offert.salaryMin }} PLN - {{ offert.salaryMax }} PLN</p>
+            </div>
+        </div>
+        <h3 class="card-title purple">Wymagane umiejętności</h3>
+        <section class="row">
+            <div class="col-sm-12">
 
-
-                <div class="col-xs-12">
-                    <div class="row">
-                        <div class="col-2 date">
-                            <div class="large">{{  offert.addedAt|date("d-m")  }}</div>
-                            <div class="text-muted">{{  offert.addedAt|date("H:i") }}</div>
-                        </div>
-                        <div class="col-10">
-                            <h4></h4>
-                            <p>
-                                {{  offert.content }}
-                            </p>
-                            {% for skill in offert.skill %}
-                                {{ skill.name }}
-                                {{ skill.value }}
-                            {% endfor %}
-
-                            <p>Przez: {{ offert.employerId }}</p>
+                <section class="row">
+                    {% for skill in offert.skill %}
+                    <div class="col-md-4 mb-2">
+                        <div class="card mb-3 text-center ">
+                            <div class="card-block">
+                                <div class="easypiechart easypiechart-1"  data-percent="{{ skill.value }}" ></div>
+                                <h5 class="mt-2 mb-1">{{ skill.name }}</h5>
+                                <p class="mb-1">{{ skill.value }} %</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="clear"></div>
-            </div><!--End .article-->
+                    {% endfor %}
+                </section>
 
+            </div>
+        </section>
     </div>
-    </div>
-
-    {% if(is_granted('ROLE_USER')) %}
-        <a href={{ path('answer', {offertId : offert.id}) }}><button type="button" class="btn btn-default">ODPOWIEDZ</button></a>
-    {% endif %}
+     {% block javascripts %}
+         {{ parent() }}
+         <script src="{{ asset('web/js/easypiechart.js') }}"></script>
+         <script src="{{ asset('web/js/easypiechart-data.js') }}"></script>
+     {% endblock %}
 {% endblock %}

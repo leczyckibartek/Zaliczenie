@@ -21,7 +21,7 @@ class SkillType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name',TextType::class,array('label'=>'Nazwa technologii'))
+        $builder->add('name',TextType::class,array('label'=>'Nazwa'))
                 ->add('value',RangeType::class,array('label'=>'Poziom'));
 
     }

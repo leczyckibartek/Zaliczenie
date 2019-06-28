@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Zadania{% endblock %}
+{% block body %}
+    {% for alert in app.flashes('alert') %}
+        <div class="alert bg-danger" role="alert"><em class="fa fa-minus-circle mr-2"></em>
+            {{ alert }}
+        </div>
+    {% endfor %}
+    {% if form is defined %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Wyślij">
+        {{ form_end(form) }}
+    {% endif %}
+    {% if answer is defined %}
+        {{ answer }}
+        <a href="{{ asset('files/'~answer)}}" download  class="button btn btn-default">Pobierz</a>
+    {% endif %}
+
+{% endblock %}
+

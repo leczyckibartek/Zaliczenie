@@ -1,26 +1,57 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Oferty pracy{% endblock %}
 
 
 {% block body %}
+
+    <div class="card mb-4">
+        <div class="card-block">
+            <h3 class="card-title">Oferty pracy</h3>
+
+            <div class="table-responsive">
+                <table class="table table-striped" id="table_id">
+                    <thead>
+                    <tr>
+                        <th>Data dodania</th>
+                        <th>Nazwa</th>
+                        <th>Firma</th>
+                        <th>Pensja</th>
+                    </tr>
+                    </thead>
+                    <tbody>
     {% for offert in offerts  %}
-    <div class="articles-container">
-        <div class="article border-bottom">
-            <div class="col-xs-12">
-                <div class="row">
-                    <div class="col-2 date">
-                        <div class="large">{{  offert.addedAt|date("d-m")  }}</div>
-                        <div class="text-muted">{{  offert.addedAt|date("H:i") }}</div>
-                    </div>
-                    <div class="col-10">
-                        <h4><a href="{{ path('offert_show', {'id': offert.id}) }}">{{ offert.title }}</a></h4>
-                        <p>Przez: {{ offert.employerId }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div><!--End .article-->
-    </div>
+                    <tr>
+                        <td>{{  offert.addedAt|date("d-m-Y")  }}</td>
+                        <td><a href="{{ path('offert_show', {'id': offert.id}) }}">{{ offert.title }}</a></td>
+                        <td>{{ offert.employerId }}</td>
+                        <td>{{ offert.salaryMin }}PLN-{{ offert.salaryMax }}PLN</td>
+                    </tr>
     {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <script>
+
+        $(document).ready(function() {
+            $.noConflict();
+            $('#table_id').dataTable( {
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Polish.json"
+                }
+            } );
+        } );
+
+
+    </script>
+
+
 
 {% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Zadanie: {{ task.title}}{% endblock %}
+{% block body %}
+
+
+<div class="justify-center">
+    <div class="col-lg-6 mb-4">
+        <div class="card text-center bg-default">
+            <div class="card-header">
+                <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item"><a class="nav-link" onclick="goBack()" href="#">Wróć</a></li>
+                </ul>
+            </div>
+            <div class="card-block">
+                <h4 class="card-title">{{ task.title }}</h4>
+                <p class="card-text">{{ task.content|raw}}</p>
+        </div>
+    </div>
+    </div>
+</div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExpirienceRepository")
@@ -17,12 +19,22 @@ class Expirience
     private $id;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *    @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $nameOfJob;
 
     /**
-     * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *      @Assert\Length(
+     *      max = 50,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $company;
 
@@ -30,6 +42,16 @@ class Expirience
      * @ORM\ManyToOne(targetEntity="App\Entity\CvMain", inversedBy="expiriences")
      */
     private $cv;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $start;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $finish;
 
     public function getId(): ?int
     {
@@ -68,6 +90,30 @@ class Expirience
     public function setCv(?CvMain $cv): self
     {
         $this->cv = $cv;
+
+        return $this;
+    }
+
+    public function getStart(): ?\DateTimeInterface
+    {
+        return $this->start;
+    }
+
+    public function setStart(\DateTimeInterface $start): self
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    public function getFinish(): ?\DateTimeInterface
+    {
+        return $this->finish;
+    }
+
+    public function setFinish(\DateTimeInterface $finish): self
+    {
+        $this->finish = $finish;
 
         return $this;
     }

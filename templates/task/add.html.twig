@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Dodaj zadanie{% endblock %}
+{% block body %}
+    <script src="https://cdn.ckeditor.com/4.11.1/basic/ckeditor.js"></script>
+
+    {% for alert in app.flashes('alert') %}
+        <div class="alert bg-danger" role="alert"><em class="fa fa-minus-circle mr-2"></em>
+            {{ alert }}
+        </div>
+    {% endfor %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <input type="submit" class="btn btn-default" value="Dodaj">
+    {{ form_end(form) }}
+    <ol>
+        {% for task in tasks  %}
+       <h2 onclick='location.href="{{ path('task_show_one',{'id':task.id}) }}";'  style="cursor: pointer;">  <li >
+               {{ task.title }}
+           </li>
+       <a href="{{ path('delete_task',{'id':task.id}) }}"></a>
+       </h2>
+        {% endfor %}
+    </ol>
+    <script>
+        CKEDITOR.replace( 'task[content]' );
+    </script>
+{% endblock %}

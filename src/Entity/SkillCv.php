@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SkillCvRepository")
@@ -17,7 +19,12 @@ class SkillCv
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *        @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $name;
 

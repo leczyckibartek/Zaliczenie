@@ -3,7 +3,9 @@
 /*Modify Chart Colors Hack*/
 .chart, .easypiechart {
   filter: hue-rotate(0deg) saturate(100%); }
-
+.purple{
+  color:#7376df;
+}
 /*Theme Switcher*/
 .theme-switcher {
   list-style: none;

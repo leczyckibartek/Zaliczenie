@@ -68,7 +68,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
+            throw new CustomUserMessageAuthenticationException('Nie ma takiego użytkownika.');
         }
 
         return $user;
@@ -86,7 +86,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         // For example : return new RedirectResponse($this->router->generate('some_route'));
-        return new RedirectResponse($this->router->generate('app_login'));
+        return new RedirectResponse($this->router->generate('home'));
     }
 
     protected function getLoginUrl()

@@ -34,22 +34,28 @@ class CvType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lname',TextType::class,array('label' => 'Imie'))
-            ->add('fname',TextType::class,array('label' => 'Nazwisko'))
-            ->add('dateOfBirth',DateType::class,array('label' => 'Data urodzenia'))
+            ->add('lname',TextType::class,array('label' => false,))
+            ->add('fname',TextType::class,array('label' => false))
+            ->add('dateOfBirth',DateType::class,array('label' => false
+            ,    'widget' => 'single_text',
+                'required'=>true,
+                'attr' => array(
+                    'value' => "2018-01-01"
+                )
+            ))
             ->add('sex',ChoiceType::class,array(
-                'label' => 'Płeć',
+                'label' => false,
                 'choices' => array(
                     'Mężczyzna'=>'m',
                     'Kobieta'=>'w'
     )
             ))
-            ->add('address',TextType::class,array('label' => 'Adres'))
-            ->add('photo',FileType::class,array('label' => 'Zdjęcie'))
-            ->add('phone',TextType::class,array('label' => 'telefon'))
+            ->add('address',TextType::class,array('label' => false))
+            ->add('photo',FileType::class,array('label' => false,'data_class'=>null))
+            ->add('phone',TextType::class,array('label' => false))
             ->add('expiriences', CollectionType::class, array(
                 'entry_type' => ExpirienceType::class,
-                'entry_options' => array('label' => 'Doświadczenie'),
+                'entry_options' => array('label' => false),
                 'label' => false,
                 'allow_add' => true,
                 'by_reference' => false,
@@ -61,7 +67,7 @@ class CvType extends AbstractType
             ))
             ->add('skillCvs', CollectionType::class, array(
                 'entry_type' => SkillCvType::class,
-                'entry_options' => array('label' => 'Umiejętności'),
+                'entry_options' => array('label' => false),
                 'label' => false,
                 'allow_add' => true,
                 'by_reference' => false,
@@ -72,7 +78,7 @@ class CvType extends AbstractType
                 )))
             ->add('schools', CollectionType::class, array(
                 'entry_type' => SchoolType::class,
-                'entry_options' => array('label' => 'Edukacja'),
+                'entry_options' => array('label' => false),
                 'label' => false,
                 'allow_add' => true,
                 'by_reference' => false,

@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CvMainRepository")
@@ -19,37 +21,62 @@ class CvMain
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *  @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
+     * @ORM\Column(type="string", length=30,nullable=true)
+     *
      */
     private $fname;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *   @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
+     * @ORM\Column(type="string", length=30,nullable=true)
      */
     private $lname;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
      * @ORM\Column(type="date")
      */
     private $dateOfBirth;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
      * @ORM\Column(type="string", length=1)
      */
     private $sex;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *    @Assert\Length(
+     *      max = 40,
+     *      maxMessage = "Wyraz nie może być dłuższy niż {{ limit }} znaków"
+     * )
      * @ORM\Column(type="string", length=40)
      */
     private $address;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string",nullable=true)
      */
     private $photo;
 
     /**
+     * @Assert\NotBlank(message="To pole nie może być puste")
+     *   @Assert\Length(
+     *      max = 9,
+     *      maxMessage = "Numer nie może być dłuższy niż {{ limit }} znaków"
+     * )
+     *
      * @ORM\Column(type="string", length=9)
+     *  @Assert\Regex("/^(?=([^\d]*\d){9,})[0-9-+\/\s]*$/")
      */
     private $phone;
 
@@ -73,6 +100,7 @@ class CvMain
      */
     private $skillCvs;
 
+
     public function __construct()
     {
         $this->expiriences = new ArrayCollection();
@@ -80,6 +108,7 @@ class CvMain
         $this->skillCvs = new ArrayCollection();
 
     }
+
 
     public function getId(): ?int
     {
@@ -151,7 +180,7 @@ class CvMain
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
 

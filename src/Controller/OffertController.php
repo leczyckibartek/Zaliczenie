@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 
-use App\Entity\Answer;
-use App\Entity\CvMain;
+
 use App\Entity\Offert;
 use App\Form\OffertType;
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +17,13 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class OffertController extends AbstractController
 {
     /**
-     * @Route("/home/offert/add", name="offert_add")
+     * @Route("/home/e/offert/add", name="offert_add")
      */
-    public function index(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,UserInterface $user = null)
+    public function add(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,UserInterface $user = null)
     {
-
-        $userid = $user->getId();
+        $username = $user->getUsername();
         $offert = new Offert();
-        $offert->setEmployerId($userid);
+        $offert->setEmployerId($username);
         $form = $this->createForm(OffertType::class,$offert);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -44,25 +41,9 @@ class OffertController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/home/offert/my", name="offert_my")
-     */
-    public function showMy(EntityManagerInterface $em,UserInterface $user = null)
-    {
-        $userid = $user->getId();
-        $repository = $em->getRepository(Offert::class);
-        $offert = $repository->findBy(
-            ['employer_id' => $userid]
-        );
-        return $this->render('offert/mine.html.twig', [
-            "offert" => $offert,
-
-
-        ]);
-    }
 
     /**
-     * @Route("/home/offert/edit/{id}", name="offert_edit")
+     * @Route("/home/e/offert/edit/{id}", name="offert_edit")
      */
     public function edit(ValidatorInterface $validator,Request $request,EntityManagerInterface $em,string $id,UserInterface $user = null)
     {
@@ -81,7 +62,7 @@ class OffertController extends AbstractController
             $em->persist($offert);
             $em->flush();
         }
-        return $this->render('offert/edit.html.twig', [
+        return $this->render('offert/add.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -112,61 +93,5 @@ class OffertController extends AbstractController
             "offert" => $offert,
         ]);
     }
-    /**
-     * @Route("/home/offer/answer/{offertId}",name="answer")
-     */
-    public function Answer(EntityManagerInterface $em,UserInterface $user,string $offertId)
-    {
-        $id = $user->getId();
-        $cvId = $em->getRepository(CvMain::class)->findOneBy(
-            ['userid'=> $id]
-        )->getId();
 
-        if($currentAnswer = $em->getRepository(Answer::class)->findOneBy(
-            ['idOffert'=> $offertId]
-        ))
-        {
-            $currentIdOffert = $currentAnswer->getIdOffert();
-            $currentIdCv = $currentAnswer->getIdCv();
-            if($currentIdCv==$cvId && $currentIdOffert==$offertId)
-            {
-                $this->addFlash(
-                    'alert',
-                    "JUŻ APLIKOWAŁEŚ NA TO STANOWISKO"
-                );
-            }
-            else
-            {
-                $answer = new Answer();
-                $answer->setIdCv($cvId);
-                $answer->setIdOffert($offertId);
-                $em->persist($answer);
-                $em->flush();
-                $this->addFlash(
-                    'message',
-                    "WYSŁANO CV"
-                );
-            }
-        }
-        else
-            {
-                $answer = new Answer();
-                $answer->setIdCv($cvId);
-                $answer->setIdOffert($offertId);
-                $em->persist($answer);
-                $em->flush();
-                $this->addFlash(
-                    'message',
-                    "WYSLANO CV"
-                );
-
-        }
-
-
-
-
-         return $this->redirectToRoute('offert_show',[
-             'id'=>$offertId,
-         ]);
-    }
 }

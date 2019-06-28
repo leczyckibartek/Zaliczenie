@@ -1,8 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Otrzymane wiadomości{% endblock %}
 {% block body %}
-{% for message in messages  %}
-    {{ message.sender }}
-{% endfor %}
+    <div class="card mb-4">
+        <div class="card-block card-hover">
+            <h3 class="card-title"></h3>
+
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+
+            <div class="articles-container">
+                {% for message in messages  %}
+                <div class="article">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-2 date">
+                                <div class="large">{{ message.date|date('H:i') }}</div>
+                                <div class="text-muted">{{ message.date|date('Y-m-d')}}</div>
+                            </div>
+                            <div class="col-10">
+                                <h4>Temat: <a href="{{ path('message_show',{'id':message.id}) }}">{{ message.subject|title }}</a>
+                                  </h4>
+                                <p>Przez: {{ message.sender }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div><!--End .article-->
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

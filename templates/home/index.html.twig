@@ -1,134 +1,55 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello!{% endblock %}
-
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Panel główny{% endblock %}
 {% block body %}
-
         <section class="row">
             <div class="col-sm-12">
                 <section class="row">
                     <div class="col-md-12 col-lg-8">
                         <div class="jumbotron">
+                            {% if(is_granted('ROLE_EMPLOYER'))%}
                             <h1 class="mb-4">Witaj w panelu pracodawcy</h1>
                             <p class="lead">Dodaj ofertę pracy i czekaj az pracownicy zaczną napływać do twojej firmy!</p>
-
-                            <p class="lead"><a class="btn btn-primary btn-lg mt-2" href="#" role="button">Więcej</a></p>
+                            <p class="lead"><a class="btn btn-primary btn-lg mt-2" href="{{ path('offert_add') }}" role="button">Dodaj</a></p>
+                            {% elseif(is_granted('ROLE_USER')) %}
+                                <h1 class="mb-4">Witaj w panelu pracownika</h1>
+                                <p class="lead">Dodaj swoje cv i wysyłaj je pracodawcom!</p>
+                                <p class="lead"><a class="btn btn-primary btn-lg mt-2" href="{{ path('cv_add') }}" role="button">Dodaj</a></p>
+                            {% endif %}
                         </div>
 
-                        <div class="card mb-4">
-                            <div class="card-block">
-                                <h3 class="card-title">Przesłane CV</h3>
-                                <div class="dropdown card-title-btn-container">
-                                    <button class="btn btn-sm btn-subtle" type="button"><em class="fa fa-list-ul"></em> View All</button>
 
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Order #</th>
-                                            <th>Product</th>
-                                            <th>Customer</th>
-                                            <th>Status</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>0001</td>
-                                            <td>Product Name 1</td>
-                                            <td>Customer 1</td>
-                                            <td>Complete</td>
-                                        </tr>
-                                        <tr>
-                                            <td>0002</td>
-                                            <td>Product Name 2</td>
-                                            <td>Customer 2</td>
-                                            <td>Complete</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                         <div class="card mb-4">
                             <div class="card-block">
                                 <h3 class="card-title">Oferty</h3>
-                                <div class="dropdown card-title-btn-container">
-                                    <a href="{{ path('offert_show_all') }}">   <button class="btn btn-sm btn-subtle" type="button"> <em class="fa fa-list-ul"></em>Wszystkie</button></a>
-
+                                <div class=" card-title-btn-container">
+                                    <a href="{{ path('offert_show_all') }}" class="btn btn-sm btn-subtle" ><em class="fa fa-list-ul"></em>Wszystkie</a>
                                 </div>
                                 <h6 class="card-subtitle mb-2 text-muted">Ostatnio dodane</h6>
                                 <div class="divider" style="margin-top: 1rem;"></div>
-
                                 {% for offert in offerts %}
                                 <div class="articles-container">
                                     <div class="article border-bottom">
                                         <div class="col-xs-12">
                                             <div class="row">
-                                                <div class="col-2 date">
-                                                    <div class="large">{{  offert.addedAt|date("d-m")  }}</div>
-                                                    <div class="text-muted">{{  offert.addedAt|date("H:i") }}</div>
+                                                <div class="col-3 date">
+                                                    <div class="large"><em class="fa fa-file"></em></div>
+                                                    <div class="text-muted">{{  offert.employerId }}</div>
                                                 </div>
-                                                <div class="col-10">
-                                                    <h4><a href="{{ path('offert_show', {'id': offert.id}) }}">{{ offert.title|upper }}</a></h4>
-                                                    <p>Przez: {{ offert.employerId }}</p>
+                                                <div class="col-9">
+                                                    <h4><a href="{{ path('offert_show', {'id': offert.id}) }}">{{ offert.title|upper }}</a>
+                                                        <p class="float-right">{{  offert.addedAt|date("H:i   Y-m-d ")}}</p></h4>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="clear"></div>
-                                    </div><!--End .article-->
+                                    </div>
                                 </div>
                                 {% endfor %}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-lg-4">
-                        <div class="card mb-4">
-                            <div class="card-block">
-                                <h3 class="card-title">Rozwiązania</h3>
-                                <h6 class="card-subtitle mb-2 text-muted">Most active this week</h6>
-                                <div class="user-progress justify-center">
-                                    <div class="col-sm-3 col-md-2" style="padding: 0;">
-                                        <img src="images/profile-pic.jpg" alt="profile photo" class="circle profile-photo" style="width: 100%; max-width: 100px;">
-                                    </div>
-                                    <div class="col-sm-9 col-md-10">
-                                        <h6 class="pt-1">Username 1</h6>
-                                        <div class="progress progress-custom">
-                                            <div class="progress-bar bg-primary" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="user-progress justify-center">
-                                    <div class="col-sm-3 col-md-2" style="padding: 0;">
-                                        <img src="images/profile-pic.jpg" alt="profile photo" class="circle profile-photo" style="width: 100%; max-width: 100px;">
-                                    </div>
-                                    <div class="col-sm-9 col-md-10">
-                                        <h6 class="pt-1">Username 2</h6>
-                                        <div class="progress progress-custom">
-                                            <div class="progress-bar bg-primary" style="width: 50%" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="user-progress justify-center">
-                                    <div class="col-sm-3 col-md-2" style="padding: 0;">
-                                        <img src="images/profile-pic.jpg" alt="profile photo" class="circle profile-photo" style="width: 100%; max-width: 100px;">
-                                    </div>
-                                    <div class="col-sm-9 col-md-10">
-                                        <h6 class="pt-1">Username 3</h6>
-                                        <div class="progress progress-custom">
-                                            <div class="progress-bar bg-primary" style="width: 25%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </div>
                 </section>
-
             </div>
         </section>
-
 {% endblock %}

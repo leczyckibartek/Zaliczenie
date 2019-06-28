@@ -1,15 +1,96 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}{{ parent() }}{% endblock %}
+{% block navtitle %}Podgląd cv{% endblock %}
 {% block body %}
-  {{ cv.lname }}
-    {{ cv.fname }}
-    {{ cv.dateOfBirth|date("d-m-Y") }}
-    {{ cv.sex }}
-    {% if (schools is defined) and (schools!=null) %}
-        {{ schools.name }}
-    {% endif %}
-    {% if (expiriences is defined) and (expiriences!=null) %}
-        {{ expiriences.nameOfJob }}
-    {% endif %}
+
+
+
+
+    <section >
+        <div class="col-sm-12">
+            <section class="row">
+                <div class="col-12 justify-center">
+                    <div class="card mb-4">
+                        <div class="card-block">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="profile" style="width: 75%; border-radius: 100px" src="{{ asset('images/photo/'~cv.photo|default('default.jpg')) }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h3 class="p-2 purple">{{ cv.fname }} {{ cv.lname }}</h3>
+                                        <h5 class="profil"><i class="fa fa-home"></i>{{ cv.address }}</h5>
+                                        <h5 class="profil"><i class="fa fa-envelope-o"></i>{{ cv.dateOfBirth |date("d-m-Y")}}</h5>
+                                        <h5 class="profil"><i class="fa fa-phone"></i>{{ cv.phone }} </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-block ">
+                            {% if (schools is defined) and (schools!=null) %}
+                            <h3 class="p-2 purple">Wykształcenie</h3>
+                                {% for school in schools  %}
+
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h5>{{ school.start|date("d-m-Y") }} - {{ school.finish|date("d-m-Y") }}</h5>
+                                    </div>
+                                    <div class="col-8">
+                                        <h5>{{ school.name }}</h5>
+                                        <h6>Kierunek: {{ school.title }}</h6>
+                                    </div>
+                                    <div class="p-2"></div>
+                                </div>
+                            </div>
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                        <div class="card-block">
+                            {% if (expiriences is defined) and (expiriences!=null) %}
+                            <h3 class="p-2 purple">Doświadczenie</h3>
+                                {% for exp in expiriences  %}
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h5>{{ exp.start|date("d-m-Y") }} - {{ exp.finish|date("d-m-Y") }}</h5>
+                                    </div>
+                                    <div class="col-8">
+                                        <h5> {{ exp.nameOfJob }}</h5>
+                                        <h6>{{ exp.company }}</h6>
+                                    </div>
+                                    <div class="p-2"></div>
+                                </div>
+                            </div>
+                                {% endfor %}
+
+                            {% endif %}
+                        </div>
+                        <div class="card-block">
+                            {% if (skills is defined) and (skills!=null) %}
+
+                            <h3 class="p-2 purple">Umiejętności</h3>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                    </div>
+                                    <div class="col-8">
+                                        {% for skill in skills  %}
+<h5>{{ skill.name }}</h5>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+
+
 
 {% endblock %}
